@@ -15,7 +15,7 @@ A bilingual (Hebrew / English) marketing landing page for **Amos Wolff**, a mast
 
 - [React 19](https://react.dev/)
 - [TanStack Start](https://tanstack.com/start) + [TanStack Router](https://tanstack.com/router) + [TanStack Query](https://tanstack.com/query)
-- [Vite 7](https://vite.dev/) (configured via `@lovable.dev/vite-tanstack-config`)
+- [Vite 7](https://vite.dev/)
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) (New York style) + Radix UI
 - [TypeScript](https://www.typescriptlang.org/)
 - [Nitro](https://nitro.build/) for the build (Cloudflare as the default target)
@@ -66,7 +66,17 @@ public/                # Static assets (favicon)
 
 All copy and translations live in the `dict` object inside `src/routes/index.tsx` (`en` and `he` keys). Contact details (phone, email, WhatsApp number, social links) are defined as constants near the top of the contact-related components in the same file.
 
+## Deployment (GitHub Pages)
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds a fully static, prerendered version of the site and publishes it to GitHub Pages.
+
+- The build runs with `BASE_PATH=/<repo>/` because project sites are served from `https://<user>.github.io/<repo>/`. Locally `BASE_PATH` is unset, so the base stays `/`.
+- `vite.config.ts` enables `prerender`, so each route is rendered to static HTML in `dist/client` — no Node server is required.
+- The workflow adds `.nojekyll` and copies `index.html` to `404.html` so client-side deep links resolve.
+
+One-time setup: in the repo, go to **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**.
+
 ## Notes
 
-- Generated/scaffolded with [Lovable](https://lovable.dev/); the Vite config is provided by `@lovable.dev/vite-tanstack-config` and already bundles the TanStack, Tailwind, and React plugins — do not add them manually.
+- The Vite config (`vite.config.ts`) wires up the TanStack Start, Tailwind, tsconfig-paths, and React plugins, plus Nitro for the production server build.
 - `bunfig.toml` enforces a 24h supply-chain guard (`minimumReleaseAge`) on new packages.
