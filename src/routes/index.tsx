@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import heroBike from "@/assets/hero-bike.jpg";
+import ogImage from "@/assets/og-image.png";
 import { Index } from "@/landing-page";
 
 export const Route = createFileRoute("/")({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
         content:
           "Precision bike fitting and professional cycling event management by Amos Wolff.",
       },
-      { property: "og:image", content: heroBike },
+      { property: "og:image", content: ogImage },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
