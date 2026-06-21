@@ -71,19 +71,19 @@
   --card-foreground: oklch(0.97 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.62 0.22 27);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.667 0.136 235);
+  --primary-foreground: oklch(0.13 0 0);
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.97 0 0);
   --muted: oklch(0.18 0 0);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.62 0.22 27);
-  --accent-foreground: oklch(0.99 0 0);
+  --accent: oklch(0.667 0.136 235);
+  --accent-foreground: oklch(0.13 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.22 0 0);
   --input: oklch(0.22 0 0);
-  --ring: oklch(0.62 0.22 27);
+  --ring: oklch(0.667 0.136 235);
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-sans: "DM Sans", system-ui, sans-serif;
   --chart-1: oklch(0.646 0.222 41.116);
@@ -155,4 +155,148 @@ body {
 h1, h2, h3, h4, h5, h6, .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
+}
+
+/* =========================================================================
+ * Accessibility (IS 5568 / WCAG 2.0 AA)
+ * Classes below are toggled on <html> by the accessibility menu.
+ * ========================================================================= */
+
+/* Skip-to-content link: hidden until focused via keyboard. */
+.a11y-skip-link {
+  position: fixed;
+  inset-inline-start: 1rem;
+  top: -120px;
+  z-index: 100;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border-radius: 0 0 0.25rem 0.25rem;
+  transition: top 0.2s ease;
+}
+.a11y-skip-link:focus {
+  top: 0;
+}
+
+/* Always-visible focus indicator for keyboard users. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Form fields sit in a tight grid; an outer outline gets clipped unevenly by
+ * neighbouring cells, so they use a thin inset ring (see focus:ring-inset). */
+:where(input, textarea, select):focus-visible {
+  outline: none;
+}
+
+/* Text size scaling (rem-based utilities scale with the root font size). */
+html.a11y-text-1 { font-size: 112.5%; }
+html.a11y-text-2 { font-size: 125%; }
+html.a11y-text-3 { font-size: 140%; }
+
+/* Readable font. */
+html.a11y-readable-font,
+html.a11y-readable-font *,
+html.a11y-readable-font h1,
+html.a11y-readable-font h2,
+html.a11y-readable-font h3,
+html.a11y-readable-font h4,
+html.a11y-readable-font h5,
+html.a11y-readable-font h6,
+html.a11y-readable-font .font-display {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+/* Highlight links. */
+html.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  outline: 1px dashed currentColor;
+  outline-offset: 3px;
+}
+
+/* Highlight headings. */
+html.a11y-highlight-headings :is(h1, h2, h3, h4, h5, h6) {
+  outline: 2px dashed var(--ring);
+  outline-offset: 4px;
+}
+
+/* Grayscale page. */
+html.a11y-grayscale {
+  filter: grayscale(100%);
+}
+
+/* High-contrast (dark). */
+html.a11y-contrast-dark {
+  --background: #000;
+  --foreground: #fff;
+  --card: #000;
+  --card-foreground: #fff;
+  --popover: #000;
+  --popover-foreground: #fff;
+  --primary: #ff0;
+  --primary-foreground: #000;
+  --secondary: #000;
+  --secondary-foreground: #fff;
+  --muted: #000;
+  --muted-foreground: #fff;
+  --accent: #ff0;
+  --accent-foreground: #000;
+  --border: #fff;
+  --input: #000;
+  --ring: #ff0;
+}
+
+/* High-contrast (light). */
+html.a11y-contrast-light {
+  --background: #fff;
+  --foreground: #000;
+  --card: #fff;
+  --card-foreground: #000;
+  --popover: #fff;
+  --popover-foreground: #000;
+  --primary: #00c;
+  --primary-foreground: #fff;
+  --secondary: #fff;
+  --secondary-foreground: #000;
+  --muted: #fff;
+  --muted-foreground: #000;
+  --accent: #00c;
+  --accent-foreground: #fff;
+  --border: #000;
+  --input: #fff;
+  --ring: #00c;
+}
+
+/* Enlarged cursor. */
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 7-6 1.6L17 19l-3 1.2-3.4-7.4L5 16z' fill='%23000' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E")
+      4 4,
+    auto;
+}
+
+/* Stop animations (user toggle). */
+html.a11y-no-motion *,
+html.a11y-no-motion *::before,
+html.a11y-no-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Respect the OS-level reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
