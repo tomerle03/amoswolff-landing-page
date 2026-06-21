@@ -1130,8 +1130,15 @@ const A11Y_DEFAULT: A11yState = {
 function applyA11y(s: A11yState) {
   if (typeof document === "undefined") return;
   const el = document.documentElement;
-  el.classList.remove("a11y-text-1", "a11y-text-2", "a11y-text-3");
+  el.classList.remove(
+    "a11y-text-1",
+    "a11y-text-2",
+    "a11y-text-3",
+    "a11y-text-down-1",
+    "a11y-text-down-2",
+  );
   if (s.textStep > 0) el.classList.add(`a11y-text-${s.textStep}`);
+  else if (s.textStep < 0) el.classList.add(`a11y-text-down-${-s.textStep}`);
   el.classList.toggle("a11y-contrast-dark", s.contrast === "dark");
   el.classList.toggle("a11y-contrast-light", s.contrast === "light");
   el.classList.toggle("a11y-grayscale", s.grayscale);
@@ -1248,7 +1255,7 @@ function AccessibilityWidget({ onOpenStatement }: { onOpenStatement: () => void 
             <div className="flex items-center justify-between border border-border">
               <button
                 type="button"
-                onClick={() => update({ textStep: Math.max(0, state.textStep - 1) })}
+                onClick={() => update({ textStep: Math.max(-2, state.textStep - 1) })}
                 aria-label={a.decrease}
                 className="px-4 py-3 text-lg font-bold hover:bg-primary/15 hover:text-primary transition-colors"
               >

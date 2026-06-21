@@ -192,6 +192,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* Text size scaling (rem-based utilities scale with the root font size). */
+html.a11y-text-down-2 { font-size: 82%; }
+html.a11y-text-down-1 { font-size: 90%; }
 html.a11y-text-1 { font-size: 112.5%; }
 html.a11y-text-2 { font-size: 125%; }
 html.a11y-text-3 { font-size: 140%; }
